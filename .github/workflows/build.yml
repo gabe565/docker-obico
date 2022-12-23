@@ -1,0 +1,103 @@
+name: Build
+
+on:
+  push: {}
+  schedule:
+    - cron: '27 8 5 * *'
+
+jobs:
+  build-backend:
+    name: Build Backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: TheSpaghettiDetective/obico-server
+      - name: Add frontend
+        run: |
+          mv frontend backend/
+          echo 'RUN ln -s /app/frontend /frontend' >> backend/Dockerfile
+      - name: Set Obico repo values
+        id: obico-git
+        run: |
+          {
+            echo -n "SHA=" && git rev-parse --short HEAD
+            echo -n "BRANCH=" && git rev-parse --abbrev-ref HEAD
+          } >> $GITHUB_OUTPUT
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ghcr.io/gabe565/obico-server
+          tags: |
+            type=raw,priority=1000,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=${{ steps.obico-git.outputs.BRANCH }}
+            type=raw,value=sha-${{ steps.obico-git.outputs.SHA }}
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push
+        id: docker_build
+        uses: docker/build-push-action@v3
+        with:
+          context: backend
+          pull: true
+          push: ${{ github.secret_source == 'Actions' }}
+          platforms: linux/amd64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  build-ml-api:
+    name: Build ML API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: TheSpaghettiDetective/obico-server
+      - name: Set Obico repo values
+        id: obico-git
+        run: |
+          {
+            echo -n "SHA=" && git rev-parse --short HEAD
+            echo -n "BRANCH=" && git rev-parse --abbrev-ref HEAD
+          } >> $GITHUB_OUTPUT
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ghcr.io/gabe565/obico-ml-api
+          tags: |
+            type=raw,priority=1000,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=${{ steps.obico-git.outputs.BRANCH }}
+            type=raw,value=sha-${{ steps.obico-git.outputs.SHA }}
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push
+        id: docker_build
+        uses: docker/build-push-action@v3
+        with:
+          context: ml_api
+          pull: true
+          push: ${{ github.secret_source == 'Actions' }}
+          platforms: linux/amd64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
