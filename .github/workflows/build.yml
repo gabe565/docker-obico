@@ -4,6 +4,7 @@ on:
   push: {}
   schedule:
     - cron: '27 8 5 * *'
+  workflow_dispatch: {}
 
 jobs:
   build-backend:
