@@ -6,6 +6,11 @@ on:
     - cron: '27 8 5 * *'
   workflow_dispatch: {}
 
+env:
+  OBICO_REPO: TheSpaghettiDetective/obico-server
+  OBICO_BRANCH: release
+  OBICO_REF: e8bcbe4ab632c952ab37ccefe1ea3f4522af9416
+
 jobs:
   build-backend:
     name: Build Backend
@@ -14,18 +19,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          repository: TheSpaghettiDetective/obico-server
+          repository: ${{ env.OBICO_REPO }}
+          ref: ${{ env.OBICO_REF }}
       - name: Add frontend
         run: |
           mv frontend backend/
           echo 'RUN ln -s /app/frontend /frontend' >> backend/Dockerfile
-      - name: Set Obico repo values
-        id: obico-git
-        run: |
-          {
-            echo -n "SHA=" && git rev-parse --short HEAD
-            echo -n "BRANCH=" && git rev-parse --abbrev-ref HEAD
-          } >> $GITHUB_OUTPUT
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -34,8 +33,8 @@ jobs:
             ghcr.io/gabe565/obico-server
           tags: |
             type=raw,priority=1000,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
-            type=raw,value=${{ steps.obico-git.outputs.BRANCH }}
-            type=raw,value=sha-${{ steps.obico-git.outputs.SHA }}
+            type=raw,value=${{ env.OBICO_BRANCH }}
+            type=raw,value=sha-${{ env.OBICO_REF }}
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -64,14 +63,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          repository: TheSpaghettiDetective/obico-server
-      - name: Set Obico repo values
-        id: obico-git
-        run: |
-          {
-            echo -n "SHA=" && git rev-parse --short HEAD
-            echo -n "BRANCH=" && git rev-parse --abbrev-ref HEAD
-          } >> $GITHUB_OUTPUT
+          repository: ${{ env.OBICO_REPO }}
+          ref: ${{ env.OBICO_REF }}
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -80,8 +73,8 @@ jobs:
             ghcr.io/gabe565/obico-ml-api
           tags: |
             type=raw,priority=1000,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
-            type=raw,value=${{ steps.obico-git.outputs.BRANCH }}
-            type=raw,value=sha-${{ steps.obico-git.outputs.SHA }}
+            type=raw,value=${{ env.OBICO_BRANCH }}
+            type=raw,value=sha-${{ env.OBICO_REF }}
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
