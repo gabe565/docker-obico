@@ -31,6 +31,6 @@
     {
       "matchUpdateTypes": ["rollback"],
       "commitMessagePrefix": ":arrow_down:"
-    },
+    }
   ]
 }
