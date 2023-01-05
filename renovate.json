@@ -9,7 +9,6 @@
     "{{datasource}}",
     "{{updateType}}"
   ],
-  "github-actions": {"enabled": false},
   "regexManagers": [
     {
       "fileMatch": ["^\\.github/workflows/"],
