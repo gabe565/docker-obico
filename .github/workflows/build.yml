@@ -25,6 +25,9 @@ jobs:
         run: |
           mv frontend backend/
           echo 'RUN ln -s /app/frontend /frontend' >> backend/Dockerfile
+      - id: short-sha
+        name: Get short sha
+        run: echo "SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -34,7 +37,7 @@ jobs:
           tags: |
             type=raw,priority=1000,value=latest
             type=raw,value=${{ env.OBICO_BRANCH }}
-            type=raw,value=sha-${{ env.OBICO_REF }}
+            type=raw,value=sha-${{ steps.short-sha.outputs.SHA }}
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -65,6 +68,9 @@ jobs:
         with:
           repository: ${{ env.OBICO_REPO }}
           ref: ${{ env.OBICO_REF }}
+      - id: short-sha
+        name: Get short sha
+        run: echo "SHA=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -74,7 +80,7 @@ jobs:
           tags: |
             type=raw,priority=1000,value=latest
             type=raw,value=${{ env.OBICO_BRANCH }}
-            type=raw,value=sha-${{ env.OBICO_REF }}
+            type=raw,value=sha-${{ steps.short-sha.outputs.SHA }}
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
