@@ -32,7 +32,7 @@ jobs:
           images: |
             ghcr.io/gabe565/obico-server
           tags: |
-            type=raw,priority=1000,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,priority=1000,value=latest
             type=raw,value=${{ env.OBICO_BRANCH }}
             type=raw,value=sha-${{ env.OBICO_REF }}
       - name: Set up Buildx
@@ -49,7 +49,7 @@ jobs:
         with:
           context: backend
           pull: true
-          push: ${{ github.secret_source == 'Actions' }}
+          push: ${{ github.ref == 'refs/heads/main' }}
           platforms: linux/amd64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -72,7 +72,7 @@ jobs:
           images: |
             ghcr.io/gabe565/obico-ml-api
           tags: |
-            type=raw,priority=1000,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,priority=1000,value=latest
             type=raw,value=${{ env.OBICO_BRANCH }}
             type=raw,value=sha-${{ env.OBICO_REF }}
       - name: Set up Buildx
@@ -89,7 +89,7 @@ jobs:
         with:
           context: ml_api
           pull: true
-          push: ${{ github.secret_source == 'Actions' }}
+          push: ${{ github.ref == 'refs/heads/main' }}
           platforms: linux/amd64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
