@@ -9,6 +9,7 @@
     "{{datasource}}",
     "{{updateType}}"
   ],
+  "automerge": true,
   "regexManagers": [
     {
       "fileMatch": ["^\\.github/workflows/"],
@@ -31,9 +32,5 @@
       "matchUpdateTypes": ["rollback"],
       "commitMessagePrefix": ":arrow_down:"
     },
-    {
-      "matchPackageNames": ["TheSpaghettiDetective/obico-server"],
-      "automerge": true
-    }
   ]
 }
