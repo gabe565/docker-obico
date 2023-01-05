@@ -16,8 +16,7 @@
       "matchStringsStrategy": "combination",
       "matchStrings": [
         "\\s+OBICO_REPO: (?<depName>.+)",
-        "\\s+OBICO_BRANCH: (?<currentValue>.+)",
-        "\\s+OBICO_REF: (?<currentDigest>.+)"
+        "\\s+OBICO_BRANCH: (?<currentValue>.+)\\n\\s+OBICO_REF: (?<currentDigest>.+)"
       ],
       "packageNameTemplate": "https://github.com/{{depName}}",
       "datasourceTemplate": "git-refs"
