@@ -1,0 +1,41 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "ignorePresets": [":prHourlyLimit2"],
+  "labels": [
+    "dependencies",
+    "{{datasource}}",
+    "{{updateType}}"
+  ],
+  "github-actions": {"enabled": false},
+  "regexManagers": [
+    {
+      "fileMatch": ["^\\.github/workflows/"],
+      "matchStringsStrategy": "combination",
+      "matchStrings": [
+        "\\s+OBICO_REPO: (?<depName>.+)",
+        "\\s+OBICO_BRANCH: (?<currentValue>.+)",
+        "\\s+OBICO_REF: (?<currentDigest>.+)"
+      ],
+      "packageNameTemplate": "https://github.com/{{depName}}",
+      "datasourceTemplate": "git-refs"
+    }
+  ],
+  "commitMessagePrefix": ":arrow_up:",
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["lockFileMaintenance", "pin"],
+      "commitMessagePrefix": ":pushpin:"
+    },
+    {
+      "matchUpdateTypes": ["rollback"],
+      "commitMessagePrefix": ":arrow_down:"
+    },
+    {
+      "matchPackageNames": ["TheSpaghettiDetective/obico-server"],
+      "automerge": true
+    }
+  ]
+}
