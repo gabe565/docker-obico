@@ -8,5 +8,6 @@
     "dependencies",
     "{{datasource}}",
     "{{updateType}}"
-  ]
+  ],
+  "github-actions": {"enabled": false}
 }
