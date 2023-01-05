@@ -9,5 +9,16 @@
     "{{datasource}}",
     "{{updateType}}"
   ],
-  "github-actions": {"enabled": false}
+  "github-actions": {"enabled": false},
+  "commitMessagePrefix": ":arrow_up:",
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["lockFileMaintenance", "pin"],
+      "commitMessagePrefix": ":pushpin:"
+    },
+    {
+      "matchUpdateTypes": ["rollback"],
+      "commitMessagePrefix": ":arrow_down:"
+    }
+  ]
 }
