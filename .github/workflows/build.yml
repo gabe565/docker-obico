@@ -38,6 +38,7 @@ jobs:
             type=raw,priority=1000,value=latest
             type=raw,value=${{ env.OBICO_BRANCH }}
             type=raw,value=sha-${{ steps.short-sha.outputs.SHA }}
+            type=raw,value=sha-${{ env.OBICO_REF }}
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
@@ -81,6 +82,7 @@ jobs:
             type=raw,priority=1000,value=latest
             type=raw,value=${{ env.OBICO_BRANCH }}
             type=raw,value=sha-${{ steps.short-sha.outputs.SHA }}
+            type=raw,value=sha-${{ env.OBICO_REF }}
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v2
       - name: Login to GitHub Container Registry
