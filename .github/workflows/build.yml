@@ -2,8 +2,6 @@ name: Build
 
 on:
   push: {}
-  schedule:
-    - cron: '27 8 5 * *'
   workflow_dispatch: {}
 
 env:
