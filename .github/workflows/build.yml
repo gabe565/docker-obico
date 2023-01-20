@@ -46,7 +46,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and Push
-        id: docker_build
         uses: docker/build-push-action@v3
         with:
           context: backend
@@ -90,7 +89,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and Push
-        id: docker_build
         uses: docker/build-push-action@v3
         with:
           context: ml_api
