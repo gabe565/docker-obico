@@ -33,7 +33,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ghcr.io/gabe565/obico-server
+            ghcr.io/gabe565/obico/web
           tags: |
             type=raw,priority=1000,value=latest
             type=raw,value=${{ env.OBICO_BRANCH }}
@@ -77,7 +77,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ghcr.io/gabe565/obico-ml-api
+            ghcr.io/gabe565/obico/ml-api
           tags: |
             type=raw,priority=1000,value=latest
             type=raw,value=${{ env.OBICO_BRANCH }}

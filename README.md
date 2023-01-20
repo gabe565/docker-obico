@@ -8,8 +8,8 @@ The Obico git ref is automatically updated by Renovate bot, so new Obico release
 
 ## Images
 
-- [ghcr.io/gabe565/obico-server](https://github.com/gabe565/docker-obico/pkgs/container/obico-server)
-- [ghcr.io/gabe565/obico-ml-api](https://github.com/gabe565/docker-obico/pkgs/container/obico-ml-api)
+- [ghcr.io/gabe565/obico/web](https://github.com/gabe565/docker-obico/pkgs/container/obico%2Fweb)
+- [ghcr.io/gabe565/obico/ml-api](https://github.com/gabe565/docker-obico/pkgs/container/obico%2Fml-api)
 
 ## Deployment
 
