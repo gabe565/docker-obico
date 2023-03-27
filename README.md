@@ -21,4 +21,4 @@ The main difference is that the server container in this repo does not require a
 
 ### Kubernetes
 
-I have built a Helm chart for Kubernetes deployments. See [gabe565/obico](https://github.com/gabe565/charts/tree/main/charts/obico) for details.
+I have built a Helm chart for Kubernetes deployments. See [charts.gabe565.com](https://charts.gabe565.com/charts/obico/) or [gabe565/charts](https://github.com/gabe565/charts/tree/main/charts/obico) for details.
