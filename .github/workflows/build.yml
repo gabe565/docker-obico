@@ -41,7 +41,7 @@ jobs:
             type=raw,value=sha-${{ steps.short-sha.outputs.SHA }}
             type=raw,value=sha-${{ env.OBICO_REF }}
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: arm64
       - name: Set up Buildx
@@ -91,7 +91,7 @@ jobs:
             type=raw,value=sha-${{ steps.short-sha.outputs.SHA }}
             type=raw,value=sha-${{ env.OBICO_REF }}
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
         with:
           platforms: arm64
       - name: Set up Buildx
