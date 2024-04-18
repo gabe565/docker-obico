@@ -19,6 +19,18 @@ These images are built very similarly to the [`docker-compose.yml`](https://gith
 
 The main difference is that the server container in this repo does not require a volume bind at `/frontend`. Those files are built directly into the container image.
 
+#### Usage
+
+1. Copy [`.env.example`](.env.example) to `.env`.
+2. Edit the file and set the desired values.
+3. Run `docker compose up`.
+   - If you want Obico to run in the background, add the `-d` flag.
+   - Note that this step will take a while due to the size of the Obico images.
+4. When ready, the web UI will be available at http://localhost:3334.
+   - Default email: `root@example.com`
+   - Default password: `password`.
+5. Data will be stored in the `data` directory.
+
 ### Kubernetes
 
 I have built a Helm chart for Kubernetes deployments. See [charts.gabe565.com](https://charts.gabe565.com/charts/obico/) or [gabe565/charts](https://github.com/gabe565/charts/tree/main/charts/obico) for details.

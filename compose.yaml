@@ -1,0 +1,63 @@
+services:
+  collectstatic:
+    image: ghcr.io/gabe565/obico/web
+    env_file:
+      - .env
+    command: [python, manage.py, collectstatic, --verbosity=2, --noinput, --link]
+    volumes:
+      - ./data/data:/data
+      - ./data/media:/app/static_build/media
+      - static:/app/static_build
+
+  migrate:
+    extends:
+      service: collectstatic
+    command: [python, manage.py, migrate]
+
+  web:
+    extends:
+      service: collectstatic
+    ports:
+      - "3334:3334"
+    depends_on: &depends
+      collectstatic:
+        condition: service_completed_successfully
+      migrate:
+        condition: service_completed_successfully
+      ml_api:
+        condition: service_started
+    command: [python, manage.py, runserver, --noreload, 0.0.0.0:3334]
+    restart: unless-stopped
+
+  tasks:
+    extends:
+      service: collectstatic
+    hostname: tasks
+    depends_on: *depends
+    restart: unless-stopped
+    command:
+      - celery
+      - --app=config
+      - worker
+      - --beat
+      - --loglevel=info
+      - --concurrency=2
+      - --queues=realtime,celery
+      - --schedule=/tmp/celerybeat-schedule
+
+  ml_api:
+    image: ghcr.io/gabe565/obico/ml-api
+    environment:
+      DEBUG: 'True'
+      FLASK_APP: 'server.py'
+      # ML_API_TOKEN:
+    restart: unless-stopped
+    tty: true
+    command: [gunicorn, --bind=0.0.0.0:3333, --workers=1, --access-logfile=-, wsgi]
+
+  redis:
+    restart: unless-stopped
+    image: redis:7.2-alpine
+
+volumes:
+  static: {}
