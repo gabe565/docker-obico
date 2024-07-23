@@ -40,6 +40,14 @@ jobs:
             type=raw,value=${{ env.OBICO_BRANCH }}
             type=raw,value=sha-${{ steps.short-sha.outputs.SHA }}
             type=raw,value=sha-${{ env.OBICO_REF }}
+          labels: |
+            org.opencontainers.image.title=Obico Web
+            maintainer=gabe565
+            org.opencontainers.image.vendor=gabe565
+            org.opencontainers.image.description=Prebuilt Obico web container
+            org.opencontainers.image.source=https://github.com/${{ env.OBICO_REPO }}
+            org.opencontainers.image.revision=${{ env.OBICO_REF }}
+            org.opencontainers.image.licenses=AGPL-3.0
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
@@ -90,6 +98,14 @@ jobs:
             type=raw,value=${{ env.OBICO_BRANCH }}
             type=raw,value=sha-${{ steps.short-sha.outputs.SHA }}
             type=raw,value=sha-${{ env.OBICO_REF }}
+          labels: |
+            org.opencontainers.image.title=Obico ML API
+            maintainer=gabe565
+            org.opencontainers.image.vendor=gabe565
+            org.opencontainers.image.description=Prebuilt Obico ML API container
+            org.opencontainers.image.source=https://github.com/${{ env.OBICO_REPO }}
+            org.opencontainers.image.revision=${{ env.OBICO_REF }}
+            org.opencontainers.image.licenses=AGPL-3.0
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
