@@ -7,7 +7,7 @@ on:
 env:
   OBICO_REPO: TheSpaghettiDetective/obico-server
   OBICO_BRANCH: release
-  OBICO_REF: e3993e83d5a7f07617275c3e71b011c5ca59fa4d
+  OBICO_REF: 9b73caa7b373e89fd23bf2fed646e629ee602640
 
 jobs:
   build-backend:
