@@ -28,7 +28,7 @@ The main difference is that the server container in this repo does not require a
    - Note that this step will take a while due to the size of the Obico images.
 4. When ready, the web UI will be available at http://localhost:3334.
    - Default email: `root@example.com`
-   - Default password: `password`.
+   - Default password: `supersecret`.
 5. Data will be stored in the `data` directory.
 
 ### Kubernetes
